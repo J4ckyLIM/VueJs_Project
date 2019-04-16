@@ -1,6 +1,6 @@
 <template>
     <section class="container">
-      <sfeir-card  v-for="person in people" :person="person" :key="person.id"></sfeir-card>        
+      <sfeir-card  v-for="person in people" :person="person" :key="person.id" @delete="deletePerson"></sfeir-card>        
     </section>
 </template>
 
@@ -24,6 +24,16 @@
                     vm.people = people;
                 }))
                 .catch(console.log.bind(console))
+        },
+        methods: {
+            deletePerson: function (person) {
+                peopleService
+                    .delete(person.id)
+                    .then((people) => {
+                        this.people = people;
+                    })
+                    .catch(console.log)
+            }
         }
     }
 
