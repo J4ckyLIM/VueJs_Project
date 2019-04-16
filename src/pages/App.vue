@@ -9,7 +9,7 @@
         <a href="#/people">Peoples</a>
     </span>
     </md-toolbar>
-    <sfeir-home></sfeir-home>
+    <router-view></router-view>
   </section>
 </template>
 

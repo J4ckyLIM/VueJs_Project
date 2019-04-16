@@ -1,9 +1,13 @@
-import Vue from 'vue';
-import VueMaterial from 'vue-material';
-import 'vue-material/dist/vue-material.css';
-import App from './App';
 
-Vue.use(VueMaterial);
+import Vue from 'vue'
+import VueMaterial from 'vue-material'
+import 'vue-material/dist/vue-material.css'
+import VueRouter from 'vue-router'
+import App from './App'
+import router from './views/router.js'
+
+Vue.use(VueRouter)
+Vue.use(VueMaterial)
 
 
 Vue.material.registerTheme('default', {
@@ -13,6 +17,7 @@ Vue.material.registerTheme('default', {
 })
 
 new Vue({
-    el: '#app',
-    render: h => h(App),
-});
+  el: '#app',
+  router,  
+  render: h => h(App)
+})
