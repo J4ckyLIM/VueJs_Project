@@ -50,6 +50,11 @@
             </md-layout>
         </md-card-content>
     </md-card>
+    <section>
+        <md-button class="md-fab md-fab-bottom-right md-primary" @click="random">
+            <md-icon>cached</md-icon>
+        </md-button>
+    </section>
   </section>
 </template>
 
@@ -65,6 +70,11 @@ export default {
   },
   created:function(){
     this.person=PEOPLE[0];
+  },
+  methods:{
+    random: function(){
+      this.person=PEOPLE[Math.floor(Math.random()*PEOPLE.length)];
+    }
   }
 }
 </script>
