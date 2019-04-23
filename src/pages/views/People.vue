@@ -1,16 +1,29 @@
 <template>
-    <section class="container">
-      <sfeir-card  v-for="person in people" :person="person" :key="person.id" @delete="deletePerson"></sfeir-card>        
-    </section>
+   <div>
+        <section class="container">
+            <sfeir-card  v-for="person in people" :person="person" :key="person.id" @delete="deletePerson"></sfeir-card>        
+        </section>
+        <md-dialog ref="dialog">
+            <md-dialog-title>Contact informations</md-dialog-title>
+            <md-dialog-content>
+                <sfeir-form @save="addPerson" @cancel="hideDialog"></sfeir-form>
+            </md-dialog-content>
+        </md-dialog>
+        <md-button class="md-fab md-fab-bottom-right md-primary" @click="showDialog">
+            <md-icon>add</md-icon>
+        </md-button>
+    </div>
 </template>
 
 <script>
     import peopleService from '../services/PeopleService.js';
     import CardPanel from '../components/CardPanel.vue'
+    import Form from '../components/Form.vue'
 
     export default {
         components: {
-            'sfeir-card': CardPanel
+            'sfeir-card': CardPanel,
+            'sfeir-form': Form
         },
         data() {
             return {
@@ -33,6 +46,23 @@
                         this.people = people;
                     })
                     .catch(console.log)
+            },
+            addPerson: function (person) {
+                peopleService
+                    .create(person)
+                    .then((person) => {
+                        this.people.push(person);
+                        this.hideDialog();
+                    })
+                    .catch(console.log)
+            },
+            showDialog() {
+                this.$refs['dialog'].open();
+                this.showModal = true;
+            },
+            hideDialog() {
+                this.$refs['dialog'].close();
+                this.showModal = false;
             }
         }
     }

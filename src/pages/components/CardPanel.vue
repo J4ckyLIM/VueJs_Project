@@ -8,7 +8,6 @@
 							<span>{{person.firstname}}</span>
 							<span class="lastname">{{person.lastname}}</span>
 						</a>
-
 					</div>
 					<div class="md-subhead">
 						<div class="subtitle">{{person.entity}}</div>
@@ -25,7 +24,7 @@
 					</div>
 				</md-card-header-text>
 				<md-card-media md-big>
-					<img class="picture" :src="person.photo" />
+					<img class="picture" :src="photoUrl" />
 				</md-card-media>
 			</md-card-header>
 			<md-card-content>
@@ -56,6 +55,11 @@
 <script>
 	export default {
 		props: ['person'],
+		computed: {			
+			photoUrl: function () {
+				return this.person.photo || 'https://randomuser.me/api/portraits/lego/6.jpg';
+			}
+		},
 		methods:{
 			onDelete:function(){
 				this.$emit('delete',this.person);
