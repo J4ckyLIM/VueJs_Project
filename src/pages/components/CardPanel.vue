@@ -32,7 +32,7 @@
 					<md-layout md-flex="33">
 						<div>
 							<span class="label">Manager: </span>
-							<span class="item">{{person.manager}}</span>
+							<span class="item">{{person.manager | na}}</span>
 						</div>
 						<div>
 							<span class="label">Location: </span>
@@ -53,6 +53,8 @@
 	</div>
 </template>
 <script>
+	import NaFilter from '../filters/NaFilter.js'
+
 	export default {
 		props: ['person'],
 		computed: {			
@@ -64,6 +66,9 @@
 			onDelete:function(){
 				this.$emit('delete',this.person);
 			}
+		},
+		filters: {
+			na: NaFilter
 		}		
 	}
 </script>
