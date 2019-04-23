@@ -5,7 +5,7 @@
             <search-bar @search="filterPeople"></search-bar>
         </div>
         <section class="container">
-            <sfeir-card v-for="person in people" :person="person" :key="person.id" @delete="deletePerson"></sfeir-card>
+            <sfeir-card :key="person.id" v-for="person in people" :person="person" @delete="deletePerson"></sfeir-card>
         </section>
         <md-dialog ref="dialog">
             <md-dialog-title>Contact informations</md-dialog-title>
@@ -25,26 +25,25 @@
     import Form from '../components/Form.vue'
     import peopleService from '../services/PeopleService.js';
     import SearchBar from '../components/SearchBar.vue'
-
+    import { mapState } from 'vuex'
+    import * as types from '../store/mutations-types'
 
     export default {
         components: {
             'sfeir-card': CardPanel,
             'sfeir-form': Form,
             'search-bar': SearchBar
-        },
-        data() {
-            return {
-                people: []
+        },        
+        /*computed: mapState({
+            people: state => state.people,
+        }),*/
+        computed:{
+            people: function(){
+                return this.$store.getters.filteredPeople;
             }
         },
-        beforeRouteEnter(route, redirect, next) {
-            peopleService
-                .fetch()
-                .then(people => next(vm => {
-                    vm._people = vm.people = people;
-                }))
-                .catch(console.log.bind(console))
+        mounted(route, redirect, next) {
+            this.$store.dispatch('fetch');
         },
         methods: {
             deletePerson: function (person) {
@@ -73,14 +72,7 @@
                 this.showModal = false;
             },
             filterPeople(search) {
-                if (!search) {
-                    this.people = this._people
-                }
-                else {
-                    this.people = this._people.filter(item => {
-                        return item.firstname.toLowerCase().indexOf(search.toLowerCase()) != -1 || item.lastname.toLowerCase().indexOf(search.toLowerCase()) != -1;
-                    });
-                }
+                this.$store.commit(types.FILTER,search);
             }
         }
     }

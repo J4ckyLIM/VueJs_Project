@@ -8,9 +8,10 @@
 							<span>{{person.firstname}}</span>
 							<span class="lastname">{{person.lastname}}</span>
 						</a>
+
 					</div>
 					<div class="md-subhead">
-						<div class="subtitle">{{person.entity}}</div>
+						<div class="subtitle">{{person.entity | na}}</div>
 						<div class="people-data">
 							<div class="">
 								<md-icon class="md-accent">email</md-icon>
@@ -32,7 +33,7 @@
 					<md-layout md-flex="33">
 						<div>
 							<span class="label">Manager: </span>
-							<span class="item">{{person.manager | na}}</span>
+							<span class="item">{{person.manager | na }}</span>
 						</div>
 						<div>
 							<span class="label">Location: </span>
@@ -53,9 +54,10 @@
 	</div>
 </template>
 <script>
-	import NaFilter from '../filters/NaFilter.js'
+	import NaFilter from '../filters/NaFilter.js';
 
 	export default {
+		name:'sfeir-card',
 		props: ['person'],
 		computed: {			
 			photoUrl: function () {
@@ -69,7 +71,7 @@
 		},
 		filters: {
 			na: NaFilter
-		}		
+		}
 	}
 </script>
 <style>

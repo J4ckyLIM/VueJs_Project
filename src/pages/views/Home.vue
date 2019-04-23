@@ -1,32 +1,33 @@
 <template>
   <section class="container">    
     <sfeir-card :person="person" @delete="random"></sfeir-card>
-    <section>
-        <md-button class="md-fab md-fab-bottom-right md-primary" @click="random">
-            <md-icon>cached</md-icon>
-        </md-button>
-    </section>
+    <md-button class="md-fab md-fab-bottom-right md-primary" @click="random">
+      <md-icon>cached</md-icon>
+    </md-button>
   </section>
 </template>
 
 <script>
-import peopleService from '../services/PeopleService.js';
 import CardPanel from '../components/CardPanel.vue'
+import peopleService from '../services/PeopleService.js';
+
 
 export default {  
   components:{
     'sfeir-card': CardPanel
-  },  
+  },
   data(){
     return {
       person:{}
     }
   },
-  created:function(){
+  beforeRouteEnter (route, redirect, next) {
     peopleService
-    .fetch()
-    .then(people=>this.person=people[0])
-    .catch(console.log);
+      .fetchRandom()
+      .then(person => next(vm => {
+        vm.person = person;
+      }))
+      .catch(console.log.bind(console))
   },
   methods:{
     random: function(){
