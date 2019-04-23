@@ -1,24 +1,29 @@
 <template>
     <div class="col s12">
-        <form class="col s6 offset-s3" @submit.prevent>
-            <div class="input-field">                
-                <p>
+        <form class="col s6 offset-s3" >
+            <div class="input-field">                                
+                <md-input-container>
                     <md-icon>search</md-icon>                
                     <label>Search</label>
-                    <input @keyup.enter="onInput"/>
-                </p>                  
+                    <md-input required @input="onInput" v-upper></md-input>
+                </md-input-container>        
             </div>
         </form>
     </div>
 </template>
 
 <script>
-export default {
+import upper from '../directives/UpperDirectives.js'
+
+export default {   
     methods: {
         onInput (event) {
-            this.$emit('search', event.target.value)
+            this.$emit('search', event)
         }
-    }
+    },
+    directives:{
+        upper
+    }    
 }
 </script>
 
